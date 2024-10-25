@@ -6,3 +6,18 @@ Detta projekt är en webbshop jag skapat för tandborstar som skapades med hjäl
 Frontend: Bygg med React för en responsiv användarupplevelse 
 
 Backend: Använt mig av en lokal JSON-fil för att hämta produktinformation 
+
+
+Hur jag har lagt upp det för att jag ska kunna starta mina servrar: 
+
+webb24-js2-slutprojekt-arian-jashari/backend npm install SEN npm start
+
+webb24-js2-slutprojekt-arian-jashari/frontend npm install SEN npm start
+
+Annars: 
+
+Npm intall i backend/frontend 
+
+Npm start i frontend
+
+node server.js i backend/src

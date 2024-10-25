@@ -1,14 +1,9 @@
 # Node modules
-
 node_modules/
 
 # Logs
 npm-debug.log
 yarn-error.log
 
-# Environment variables
-.env
-
 # Build output
 build/
-dist/

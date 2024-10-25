@@ -1,4 +1,3 @@
-// backend/src/server.js
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
@@ -11,12 +10,12 @@ app.use(express.json());
 
 let products = require('./data/products.json');
 
-// Route för att hämta alla produkter
+// Route för att hämta  produkter
 app.get('/products', (req, res) => {
   res.json(products);
 });
 
-// Route för att söka efter produkter baserat på namn
+// Route för att söka efter produkter via på namn
 app.get('/products/search', (req, res) => {
   const searchTerm = req.query.name?.toLowerCase();
   if (!searchTerm) {
@@ -30,7 +29,7 @@ app.get('/products/search', (req, res) => {
   res.json(filteredProducts);
 });
 
-// Route för att sortera produkter baserat på pris
+// Route för att sortera via pris
 app.get('/products/sort', (req, res) => {
   const order = req.query.order;
   if (!['asc', 'desc'].includes(order)) {
