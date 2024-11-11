@@ -1,0 +1,58 @@
+/* Styling för kundvagn */
+
+.cart-page {
+    padding: 20px; 
+    background-color: #e0f7f9; 
+    border-radius: 8px; 
+}
+
+h1 {
+    text-align: center; 
+    font-size: 2em; 
+    margin-bottom: 20px; 
+}
+
+.cart-item {
+    border: 1px solid #ccc; 
+    padding: 15px; 
+    margin: 10px 0; 
+    background-color: #ffffff; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+    border-radius: 5px; 
+}
+
+.cart-item h2 {
+    font-size: 1.5em; 
+    margin: 0; 
+}
+
+.cart-item p {
+    font-size: 1.2em; 
+    margin: 5px 0; 
+}
+
+.total-price {
+    font-size: 1.5em; 
+    text-align: right; 
+    margin-top: 20px; 
+}
+
+button {
+    padding: 10px 15px; 
+    margin: 10px 5px; 
+    background-color: #87ceeb; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+button:hover {
+    background-color: #7bc4e0; 
+}
+
+.confirmation-message {
+    color: green; 
+    font-size: 1.5em; 
+    margin-top: 20px; 
+    text-align: center; 
+}

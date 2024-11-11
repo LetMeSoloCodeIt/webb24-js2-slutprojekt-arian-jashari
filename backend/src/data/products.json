@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Tandborste Bob",
+    "price": 100,
+    "stock": 5,
+    "image": "/images/tandborste1.png"
+  },
+  {
+    "id": 2,
+    "name": "Tandborste Emil",
+    "price": 200,
+    "stock": 6,
+    "image": "/images/tandborste2.png"
+  },
+  {
+    "id": 3,
+    "name": "Tandborste Eva",
+    "price": 300,
+    "stock": 9,
+    "image": "/images/tandborste3.png"
+  },
+  {
+    "id": 4,
+    "name": "Tandborste Ari",
+    "price": 400,
+    "stock": 3,
+    "image": "/images/tandborste4.png"
+  },
+  {
+    "id": 5,
+    "name": "Tandborste Elsa",
+    "price": 500,
+    "stock": 7,
+    "image": "/images/tandborste5.png"
+  }
+]
