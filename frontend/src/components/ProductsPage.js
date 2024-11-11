@@ -15,7 +15,6 @@ const ProductsPage = ({ setCart, cart }) => {
 
     const addToCart = (product) => {
         if (product.stock <= 0) {
-            alert("Produkten är slut i lager!");
             return;
         }
 

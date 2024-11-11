@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 let products = require('./data/products.json');
-const originalProducts = JSON.parse(JSON.stringify(products)); // Kopiera ursprungliga produkter
+const originalProducts = JSON.parse(JSON.stringify(products));
 
 app.get('/products', (req, res) => {
   res.json(products);
@@ -60,10 +60,23 @@ app.put('/products/purchase', (req, res) => {
   res.status(200).json(product);
 });
 
-app.put('/products/reset', (req, res) => {
-  products = JSON.parse(JSON.stringify(originalProducts)); // Återställ produkter från originalet
+app.put('/products/restore', (req, res) => {
+  const cartItems = req.body;
+  
+  cartItems.forEach(cartItem => {
+    const product = products.find(prod => prod.id === cartItem.id);
+    if (product) {
+      const originalProduct = originalProducts.find(prod => prod.id === cartItem.id);
+      product.stock += cartItem.quantity;
+      if (product.stock > originalProduct.stock) {
+        product.stock = originalProduct.stock;
+      }
+    }
+  });
+
   fs.writeFileSync(path.join(__dirname, 'data', 'products.json'), JSON.stringify(products, null, 2), 'utf-8');
-  res.status(200).json({ message: "Products reset successful", products });
+
+  res.status(200).json({ message: "Selected products restored successfully", products });
 });
 
 app.listen(PORT, () => {

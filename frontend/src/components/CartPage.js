@@ -9,11 +9,12 @@ const CartPage = ({ cart, setCart }) => {
     const total = cart.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
     const clearCart = () => {
-        fetch('http://localhost:5000/products/reset', {
+        fetch('http://localhost:5000/products/restore', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(cart) // Skicka kundvagnen till backend
         })
         .then(() => {
             setCart([]);
