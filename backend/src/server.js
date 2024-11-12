@@ -41,23 +41,20 @@ app.get('/products/sort', (req, res) => {
   res.json(sortedProducts);
 });
 
+
 app.put('/products/purchase', (req, res) => {
-  const { id, quantity } = req.body;
+  const cartItems = req.body;
 
-  const product = products.find((prod) => prod.id === id);
-  if (!product) {
-    return res.status(404).json({ message: "Product not found" });
-  }
-
-  if (product.stock < quantity) {
-    return res.status(400).json({ message: "Insufficient stock" });
-  }
-
-  product.stock = Math.max(0, product.stock - quantity);
+  cartItems.forEach(cartItem => {
+    const product = products.find(prod => prod.id === cartItem.id);
+    if (product && product.stock >= cartItem.quantity) {
+      product.stock -= cartItem.quantity;
+    }
+  });
 
   fs.writeFileSync(path.join(__dirname, 'data', 'products.json'), JSON.stringify(products, null, 2), 'utf-8');
 
-  res.status(200).json(product);
+  res.status(200).json({ message: "Purchase successful" });
 });
 
 app.put('/products/restore', (req, res) => {

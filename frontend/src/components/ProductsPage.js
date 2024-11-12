@@ -1,79 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Product from './Product';
 import './ProductsPage.css';
 
-const ProductsPage = ({ setCart, cart }) => {
-    const [products, setProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-
-    useEffect(() => {
-        fetch('http://localhost:5000/products')
-            .then((res) => res.json())
-            .then((data) => setProducts(data))
-            .catch((err) => console.error("Fel vid hämtning av produkter:", err));
-    }, []);
-
+const ProductsPage = ({ products, setCart, cart }) => {
+     const [searchTerm, setSearchTerm] = useState('');
+    const [sorted, setSorted] = useState(false);
+ 
     const addToCart = (product) => {
-        if (product.stock <= 0) {
-            return;
-        }
+        const existingProduct = cart.find((item) => item.id === product.id);
 
-        const existingProductIndex = cart.findIndex((item) => item.id === product.id);
-        
-        if (existingProductIndex >= 0) {
-            const updatedCart = cart.map((item, index) =>
-                index === existingProductIndex
+      
+        if (existingProduct) {
+             if (existingProduct.quantity >= product.stock) {
+                alert(`Det finns endast ${product.stock} i lager för denna produkt.`);
+                 return;
+            }
+            setCart(cart.map(item =>
+                item.id === product.id
                     ? { ...item, quantity: item.quantity + 1 }
                     : item
-            );
-
-            setCart(updatedCart);
-        } else {
-            setCart([...cart, { ...product, quantity: 1 }]);
+            ));
+         } else {
+             if (product.stock > 0) {
+                setCart([...cart, { ...product, quantity: 1 }]);
+              } else {
+                 alert("Produkten är slut i lager.");
+            }
         }
-
-        fetch('http://localhost:5000/products/purchase', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: product.id, quantity: 1 })
-        })
-        .then((res) => res.json())
-        .then((updatedProduct) => {
-            const updatedProducts = products.map((p) =>
-                p.id === product.id ? updatedProduct : p
-            );
-            setProducts(updatedProducts);
-        })
-        .catch((err) => console.error("Fel vid uppdatering av lagret:", err));
     };
 
-    const sortProductsByPriceDescending = () => {
-        const sortedProducts = [...products].sort((a, b) => b.price - a.price);
-        setProducts(sortedProducts);
+    const toggleSortByPrice = () => {
+        setSorted(!sorted);
     };
 
-    const filteredProducts = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+     const filteredProducts = products
+        .filter(product =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+         )
+        .sort((a, b) => sorted ? b.price - a.price : a.id - b.id); 
 
     return (
-        <div className="products-page">
+         <div className="products-page">
             <h1>Produkter</h1>
             <input
                 type="text"
                 placeholder="Sök efter produkter..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button onClick={sortProductsByPriceDescending}>Sortera efter pris</button>
+            <button onClick={toggleSortByPrice}>
+                 {sorted ? "Visa originalordning" : "Sortera efter pris"}
+            </button>
             <div className="products-list">
-                {filteredProducts.map((product) => (
+                 {filteredProducts.map((product) => (
                     <Product key={product.id} product={product} addToCart={addToCart} />
-                ))}
+                 ))}
             </div>
-        </div>
+         </div>
     );
 };
 

@@ -6,7 +6,7 @@ const ConfirmationPage = () => {
     <div className="confirmation-page">
         {/* Bekräftels efter ett lyckat köp */}
       <h1>Tack för ditt köp!</h1>
-      <p>Ditt köp har genomförts framgångsrikt.</p>
+      <p>Ditt köp har genomförts.</p>
     </div>
          );
 };
